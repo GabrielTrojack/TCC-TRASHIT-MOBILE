@@ -23,7 +23,7 @@ const Home = () => {
   const [uf, setUf] = useState<string[]>([])
   const [city, setCity] = useState<string[]>([])
   const [selectedUf, setSelectedUf] = useState('0')
-  const [selectedCity, setSelecdetCity] = useState('0')
+  const [selectedCity, setSelectedCity] = useState('0')
 
   // const navigation = useNavigation()
 
@@ -58,18 +58,13 @@ const Home = () => {
   }, [selectedUf])
 
 
-  function handleSelectUf(value: string) {
-    const uf = value 
-
-    setSelectedUf(uf)
+  function handleSelectUf(uf: string) {
+    setSelectedUf(uf);
   }
 
-  function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
-    const city = event.target.value
-
-    setSelecdetCity(city)
+  function handleSelectCity(city: string) {
+    setSelectedCity(city);
   }
-  
 
   return(
     <KeyboardAvoidingView 
@@ -100,7 +95,7 @@ const Home = () => {
         minHeight="60"
         placeholder="Uf"
         color="teal.600"
-        onValueChange={e => handleSelectUf(e.target.value)}
+        onValueChange={(value) => handleSelectUf(value)}
         _selectedItem={{
           bg: "teal.600",
           endIcon: <CheckIcon size="5" />
@@ -118,7 +113,8 @@ const Home = () => {
         minWidth="200" 
         minHeight="60"  
         placeholder="Cidade"
-        onValueChange={selectedCity => handleSelectCity(selectedCity)}
+        color="teal.600"
+        onValueChange={(value) => handleSelectCity(value)}
         _selectedItem={{
           bg: "teal.600",
           endIcon: <CheckIcon size="5" />
