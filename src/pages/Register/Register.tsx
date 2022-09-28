@@ -1,17 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { View, 
   ImageBackground, 
   Text, 
   Image, 
-  TextInput, 
   KeyboardAvoidingView, 
   Platform, 
   TouchableOpacity } from 'react-native'
-// import { useNavigation } from '@react-navigation/native'
+import { Input, Pressable, Icon } from 'native-base'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import api from '../../services/api'
 
 import styles from './styles'
 
 const Register = () => {
+  const navigation = useNavigation()
+  // const [show, setShow] = React.useState(false);
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  function loginNavigate() {
+    navigation.navigate('Login')
+  }
+  
+
+  async function handleRegister(e: FormEvent) {
+    e.preventDefault()
+
+
+    const data = {
+        name,
+        email,
+        password,
+        adm: false
+    };
+
+  try {
+    await api.post('user', data)
+    alert("Cadastro realizado com sucesso!!")
+    loginNavigate()
+  } catch (err) {
+      alert(err)
+  }
+}
 
   return(
     <KeyboardAvoidingView 
@@ -31,32 +63,50 @@ const Register = () => {
       </View>
 
       <View style={styles.footer}>
-      <TextInput 
-          style={styles.input}
-          placeholder="Nome"
-          // value={email}
-          autoCorrect={false}
-          // onChangeText={setEmail}
+      <Input
+        style={styles.input}
+        size="2xl"
+        variant="unstyled" 
+        placeholder="Nome"
+        value={name}
+        onChangeText={setName}
         />
 
-        <TextInput 
-          style={styles.input}
-          placeholder="E-mail"
-          // value={email}
-          autoCorrect={false}
-          // onChangeText={setEmail}
+      <Input
+        style={styles.input}
+        size="2xl"
+        variant="unstyled" 
+        placeholder="E-mail"
+        value={email}
+        onChangeText={setEmail}
         />
 
-        <TextInput 
-          style={styles.input}
-          placeholder="Senha"
-          // value={name}
-          autoCorrect={false}
-          // onChangeText={setName}
+      <Input
+        style={styles.input}
+        size="2xl"
+        variant="unstyled" 
+        placeholder="Senha"
+        value={password}
+        onChangeText={setPassword}
+        // type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+        //     <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
+        //   </Pressable>}
         />
+        
+      <Input
+        style={styles.input}
+        size="2xl"
+        variant="unstyled" 
+        placeholder="Confirme a senha"
+        // value={password}
+        // onChangeText={setPassword}
+        // type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+        //     <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
+        //   </Pressable>}
+      />
 
         <TouchableOpacity style={styles.button} 
-        // onPress={handleNavigateToHome}
+        onPress={handleRegister}
         >
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>

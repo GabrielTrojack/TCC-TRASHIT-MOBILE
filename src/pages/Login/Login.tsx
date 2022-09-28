@@ -3,15 +3,18 @@ import { View,
   ImageBackground, 
   Text, 
   Image, 
-  TextInput, 
   KeyboardAvoidingView, 
   Platform, 
   TouchableOpacity } from 'react-native'
-// import { useNavigation } from '@react-navigation/native'
+import { Input, Pressable, Icon } from 'native-base'
+import { Feather } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 import styles from './styles'
 
 const Login = () => {
+    const [show, setShow] = React.useState(false);
+
   return(
     <KeyboardAvoidingView 
     style={{ flex: 1 }} 
@@ -30,21 +33,27 @@ const Login = () => {
       </View>
 
       <View style={styles.footer}>
-        <TextInput 
-          style={styles.input}
-          placeholder="E-mail"
-          // value={email}
-          autoCorrect={false}
-          // onChangeText={setEmail}
+      <Input
+        style={styles.input}
+        size="2xl"
+        variant="unstyled" 
+        placeholder="E-mail"
+        // value={email}
+        // onChangeText={setEmail}
         />
 
-        <TextInput 
-          style={styles.input}
-          placeholder="Senha"
-          // value={name}
-          autoCorrect={false}
-          // onChangeText={setName}
-        />
+        
+      <Input
+      style={styles.input}
+      size="2xl"
+      variant="unstyled" 
+      placeholder="Senha"
+      // value={password}
+      // onChangeText={setPassword}
+      type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+          <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
+        </Pressable>}
+      />
 
         <TouchableOpacity style={styles.button} 
         // onPress={handleNavigateToHome}

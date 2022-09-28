@@ -17,7 +17,7 @@ export default StyleSheet.create({
     fontSize: 32,
     // fontFamily: 'Ubuntu_700Bold',
     maxWidth: 300,
-    marginTop: 64,
+    margin: 30,
   },
 
   description: {

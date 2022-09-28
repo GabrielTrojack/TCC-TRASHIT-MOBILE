@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
-import { Feather as Icon } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { View, ImageBackground, Text, Image, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 import { Select, CheckIcon } from "native-base";
@@ -132,7 +132,7 @@ const Home = () => {
         >
           <View style={styles.buttonIcon}>
             <Text>
-              <Icon name="arrow-right" color="#FFF" size={24} />
+              <Feather name="arrow-right" color="#FFF" size={24} />
             </Text>
           </View>
           <Text style={styles.buttonText}>
