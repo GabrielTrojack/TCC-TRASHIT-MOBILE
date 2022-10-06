@@ -26,7 +26,7 @@ const Routes = () => {
             backgroundColor: '#f0f0f5'
           }
         }}>
-        <RootStack.Screen name="Home" component={Home} />
+        {/* <RootStack.Screen name="Home" component={Home} /> */}
         <RootStack.Screen name="Register" component={Register} />
         <RootStack.Screen name="Login" component={Login} />
         {/* <RootStack.Screen name="Points" component={Points} />

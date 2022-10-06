@@ -6,40 +6,43 @@ import { View,
   KeyboardAvoidingView, 
   Platform, 
   TouchableOpacity } from 'react-native'
-import { Input, Pressable, Icon } from 'native-base'
+import { Input, Pressable, Icon, Stack, FormControl } from 'native-base'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import api from '../../services/api'
 
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../RootStackPrams';
+
+type authScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
+
 import styles from './styles'
 
 const Register = () => {
-  const navigation = useNavigation()
-  // const [show, setShow] = React.useState(false);
+  const navigation = useNavigation<authScreenProp>();
+  const [show, setShow] = React.useState(false);
+  // const [ConfShow, setConfShow] = React.useState(false);
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  function loginNavigate() {
-    navigation.navigate('Login')
-  }
+  // const [ConfPassword, setConfPassword] = useState('')
   
 
-  async function handleRegister(e: FormEvent) {
-    e.preventDefault()
-
+  async function handleRegister() {
 
     const data = {
-        name,
-        email,
-        password,
+        name : name,
+        email: email,
+        password: password,
         adm: false
     };
 
   try {
+    console.log(api);
+    
     await api.post('user', data)
     alert("Cadastro realizado com sucesso!!")
-    loginNavigate()
+    navigation.navigate('Login')
   } catch (err) {
       alert(err)
   }
@@ -63,7 +66,11 @@ const Register = () => {
       </View>
 
       <View style={styles.footer}>
-      <Input
+      <FormControl>
+      <Stack space={2}>
+        <Stack>
+          {/* <FormControl.Label>Username</FormControl.Label> */}
+          <Input
         style={styles.input}
         size="2xl"
         variant="unstyled" 
@@ -71,8 +78,10 @@ const Register = () => {
         value={name}
         onChangeText={setName}
         />
-
-      <Input
+        </Stack>
+        <Stack>
+          {/* <FormControl.Label>Password</FormControl.Label> */}
+          <Input
         style={styles.input}
         size="2xl"
         variant="unstyled" 
@@ -80,35 +89,42 @@ const Register = () => {
         value={email}
         onChangeText={setEmail}
         />
-
-      <Input
+        </Stack>
+        <Stack>
+          {/* <FormControl.Label>Password</FormControl.Label> */}
+          <Input
         style={styles.input}
         size="2xl"
         variant="unstyled" 
         placeholder="Senha"
         value={password}
         onChangeText={setPassword}
-        // type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
-        //     <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
-        //   </Pressable>}
+        type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
+            <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
+          </Pressable>}
         />
-        
-      <Input
+        </Stack>
+        <Stack>
+          {/* <FormControl.Label>Password</FormControl.Label> */}
+          {/* <Input
         style={styles.input}
         size="2xl"
         variant="unstyled" 
         placeholder="Confirme a senha"
-        // value={password}
-        // onChangeText={setPassword}
-        // type={show ? "text" : "password"} InputRightElement={<Pressable onPress={() => setShow(!show)}>
-        //     <Icon as={<Feather name={show ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
-        //   </Pressable>}
-      />
+        value={ConfPassword}
+        onChangeText={setConfPassword}
+        type={ConfShow ? "text" : "password"} InputRightElement={<Pressable onPress={() => setConfShow(!ConfShow)}>
+            <Icon as={<Feather name={ConfShow ? "eye" : "eye-off"} />} size={5} mr="2" color="muted.400" />
+          </Pressable>}
+      /> */}
+        </Stack>
+      </Stack>
+    </FormControl>
 
         <TouchableOpacity style={styles.button} 
-        onPress={handleRegister}
+        onPress={()=>handleRegister()}
         >
-          <Text style={styles.buttonText}>Entrar</Text>
+          <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
