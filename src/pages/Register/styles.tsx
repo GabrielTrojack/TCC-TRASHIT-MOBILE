@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ export default StyleSheet.create({
 
   main: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   title: {
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     fontSize: 32,
     // fontFamily: 'Ubuntu_700Bold',
     maxWidth: 300,
-    margin: 30,
+    margin: 30
   },
 
   description: {
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     marginTop: 16,
     // fontFamily: 'Roboto_400Regular',
     maxWidth: 260,
-    lineHeight: 24,
+    lineHeight: 24
   },
 
   footer: {},
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginBottom: 8,
     paddingHorizontal: 24,
-    fontSize: 16,
+    fontSize: 16
   },
 
   button: {
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 8
   },
 
   buttonIcon: {
@@ -67,12 +67,15 @@ export default StyleSheet.create({
     color: '#FFF',
     // fontFamily: 'Roboto_500Medium',
     fontSize: 16,
+    marginTop: 5
   },
-  image:{
+  image: {
     height: 210,
     width: 150,
-    marginLeft:80
-
-
+    marginLeft: 80
+  },
+  gotAcount: {
+    color: '#fff',
+    justifyContent: 'flex-start'
   }
-});
+})

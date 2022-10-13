@@ -1,15 +1,17 @@
-import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react'
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import React, { useEffect, useState } from 'react'
 import { Feather } from '@expo/vector-icons'
-import { View, ImageBackground, Text, Image, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, ImageBackground, Text, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
-import { Select, CheckIcon } from "native-base";
+import { Select, CheckIcon } from 'native-base'
 import api from '../../services/api'
 import axios from 'axios'
 
 // import { useNavigation } from '@react-navigation/native'
 
 import styles from './styles'
-import Logo from '../../assets/logo.svg'
+// import Logo from '../../assets/logo.svg'
 
 interface IBGEUFResponse {
   sigla: string
@@ -36,45 +38,41 @@ const Home = () => {
 
   useEffect(() => {
     axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-    .then(response => {
-      const ufInitials = response.data.map(uf => uf.sigla)
-
-      setUf(ufInitials)
-    })
-  },[])
+      .then(response => {
+        const ufInitials = response.data.map(uf => uf.sigla)
+        setUf(ufInitials)
+      })
+  }, [])
 
   useEffect(() => {
-    if(selectedUf === '0') {
+    if (selectedUf === '0') {
       return
     }
     axios
       .get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
       .then(response => {
         const cityNames = response.data.map(city => city.nome)
-
         setCity(cityNames)
-    })
-
+      })
   }, [selectedUf])
 
-
-  function handleSelectUf(uf: string) {
-    setSelectedUf(uf);
+  function handleSelectUf (uf: string) {
+    setSelectedUf(uf)
   }
 
-  function handleSelectCity(city: string) {
-    setSelectedCity(city);
+  function handleSelectCity (city: string) {
+    setSelectedCity(city)
   }
 
-  return(
-    <KeyboardAvoidingView 
-    style={{ flex: 1 }} 
+  return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}
   >
-    <ImageBackground 
-      source={require('../../assets/home-background.png')} 
+    <ImageBackground
+      source={require('../../assets/home-background.png')}
       style={styles.container}
-      imageStyle={{ width: 274, height:368, opacity:0.1 }}
+      imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
     >
       <View style={styles.main}>
         {/* <Logo width={120} height={40} />; */}
@@ -88,46 +86,46 @@ const Home = () => {
       </View>
 
       <View style={styles.footer}>
-      <Select 
+      <Select
         mt={1}
-        selectedValue={selectedUf} 
-        minWidth="200" 
+        selectedValue={selectedUf}
+        minWidth="200"
         minHeight="60"
         placeholder="Uf"
         color="teal.600"
         onValueChange={(value) => handleSelectUf(value)}
         _selectedItem={{
-          bg: "teal.600",
+          bg: 'teal.600',
           endIcon: <CheckIcon size="5" />
-        }} 
+        }}
         >
             <Select.Item label="Selecione sua UF" value="ux" />
             {uf.map(uf => (
                  <Select.Item key={uf} value={uf} label={uf}/>
-               ))}
-            
+            ))}
+
         </Select>
-        <Select 
+        <Select
         mt={1}
-        selectedValue={selectedCity} 
-        minWidth="200" 
-        minHeight="60"  
+        selectedValue={selectedCity}
+        minWidth="200"
+        minHeight="60"
         placeholder="Cidade"
         color="teal.600"
         onValueChange={(value) => handleSelectCity(value)}
         _selectedItem={{
-          bg: "teal.600",
+          bg: 'teal.600',
           endIcon: <CheckIcon size="5" />
-        }} 
+        }}
         >
             <Select.Item label="Selecione sua UF" value="ux" />
             {city.map(city => (
                  <Select.Item key={city} value={city} label={city }/>
-               ))}
-            
+            ))}
+
         </Select>
 
-        <RectButton style={styles.button} 
+        <RectButton style={styles.button}
         // onPress={handleNavigateToPoints}
         >
           <View style={styles.buttonIcon}>

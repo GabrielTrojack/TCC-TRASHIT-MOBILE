@@ -17,14 +17,14 @@ export default StyleSheet.create({
 
   main: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   title: {
     color: '#fff',
     fontSize: 34,
     // fontFamily: 'Ubuntu_700Bold',
-    maxWidth: 300,
+    maxWidth: 300
   },
 
   description: {
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     marginBottom: 140,
     // fontFamily: 'Roboto_400Regular',
     maxWidth: 260,
-    lineHeight: 24,
+    lineHeight: 24
   },
 
   footer: {},
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginBottom: 8,
     paddingHorizontal: 24,
-    fontSize: 16,
+    fontSize: 16
   },
 
   button: {
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     marginTop: 25
-    },
+  },
 
   buttonIcon: {
     height: 60,
@@ -74,9 +74,13 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: '#FFF',
     // fontFamily: 'Roboto_500Medium',
-    fontSize: 16,
+    fontSize: 16
   },
-  Image:{
-    opacity:50
+  Image: {
+    opacity: 50
+  },
+  gotAcount: {
+    color: '#fff',
+    justifyContent: 'flex-end'
   }
 })
