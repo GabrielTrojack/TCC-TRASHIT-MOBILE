@@ -3,4 +3,5 @@ export interface RootStackParamList {
   Register: undefined
   Login: undefined
   Home: undefined
+  RequestPoint: undefined
 }

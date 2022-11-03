@@ -85,7 +85,6 @@ export default StyleSheet.create({
     marginRight: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
-
     textAlign: 'center'
   },
 
@@ -111,5 +110,21 @@ export default StyleSheet.create({
 
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  header: {
+    justifyContent: 'space-between'
+  },
+  sugerirColetaTxT: {
+    color: '#34cb79',
+    fontSize: 20,
+    marginHorizontal: 5,
+    marginTop: -5
+  },
+  sugerirColeta: {
+    borderWidth: 1,
+    borderColor: '#34cb79',
+    borderRadius: 7,
+    paddingHorizontal: 3,
+    paddingVertical: 2
   }
 })

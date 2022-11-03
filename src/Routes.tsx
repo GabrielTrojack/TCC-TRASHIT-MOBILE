@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from './pages/Home/Home'
 import Points from './pages/Points/Points'
-// import Detail from './pages/Detail'
+import RequestPoint from './pages/RequestPoint/RequestPoint'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 
@@ -15,41 +15,25 @@ export interface RootStackParamList {
   Register: undefined
   Login: undefined
   Home: undefined
+  RequestPoint: undefined
 }
 
 const Routes = () => {
-  // const config = {
-  //   animation: 'spring',
-  //   config: {
-  //     stiffness: 1000,
-  //     damping: 500,
-  //     mass: 3,
-  //     overshootClamping: true,
-  //     restDisplacementThreshold: 0.01,
-  //     restSpeedThreshold: 0.01
-  //   }
-  // }
   return (
     <NavigationContainer>
       <RootStack.Navigator
+        initialRouteName="Points"
         screenOptions={{
           headerShown: false,
           cardStyle: {
             backgroundColor: '#f0f0f5'
           }
         }}>
-        {/* <RootStack.Screen name="Home" component={Home} /> */}
-        {/* <RootStack.Screen name="Register" component={Register}
-        options={{
-          transitionSpec: {
-            open: config,
-            close: config
-          }
-        }}
-        /> */}
+        <RootStack.Screen name="Home" component={Home} />
+        <RootStack.Screen name="Register" component={Register} />
         <RootStack.Screen name="Login" component={Login}/>
         <RootStack.Screen name="Points" component={Points} />
-        {/* <RootStack.Screen name="Detail" component={Detail} /> */}
+        <RootStack.Screen name="RequestPoint" component={RequestPoint} />
       </RootStack.Navigator>
     </NavigationContainer>
   )
