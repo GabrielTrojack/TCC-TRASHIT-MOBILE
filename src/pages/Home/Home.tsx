@@ -5,13 +5,19 @@ import { Feather } from '@expo/vector-icons'
 import { View, ImageBackground, Text, Image, KeyboardAvoidingView, Platform } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 import { Select, CheckIcon } from 'native-base'
-import api from '../../services/api'
+import { useNavigation } from '@react-navigation/native'
+// import api from '../../services/api'
 import axios from 'axios'
 
 // import { useNavigation } from '@react-navigation/native'
 
 import styles from './styles'
-// import Logo from '../../assets/logo.svg'
+import Logo from '../../assets/logo.svg'
+
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../RootStackPrams'
+
+type authScreenProp = StackNavigationProp<RootStackParamList, 'Login'>
 
 interface IBGEUFResponse {
   sigla: string
@@ -22,19 +28,15 @@ interface IBGECityResponse {
 }
 
 const Home = () => {
+  const navigation = useNavigation<authScreenProp>()
   const [uf, setUf] = useState<string[]>([])
   const [city, setCity] = useState<string[]>([])
   const [selectedUf, setSelectedUf] = useState('0')
   const [selectedCity, setSelectedCity] = useState('0')
 
-  // const navigation = useNavigation()
-
-  // function handleNavigateToPoints() {
-  //   navigation.navigate('Points',{
-  //     uf,
-  //     city,
-  //   })
-  // }
+  function handleLocation () {
+    navigation.navigate('Points')
+  }
 
   useEffect(() => {
     axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -75,8 +77,7 @@ const Home = () => {
       imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
     >
       <View style={styles.main}>
-        {/* <Logo width={120} height={40} />; */}
-        <Image style={styles.image} source={require('../../assets/logo.png')} />
+        <Logo/>
         <View>
           <Text style={styles.title}>Suas informações de coleta de resíduos aqui.</Text>
           <Text style={styles.description}>
@@ -133,7 +134,7 @@ const Home = () => {
               <Feather name="arrow-right" color="#FFF" size={24} />
             </Text>
           </View>
-          <Text style={styles.buttonText}>
+          <Text style={styles.buttonText} onPress={handleLocation}>
             Entrar
           </Text>
         </RectButton>

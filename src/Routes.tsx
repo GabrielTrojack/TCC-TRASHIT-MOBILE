@@ -2,7 +2,6 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Home from './pages/Home/Home'
 import Points from './pages/Points/Points'
 import RequestPoint from './pages/RequestPoint/RequestPoint'
 import Login from './pages/Login/Login'
@@ -29,7 +28,6 @@ const Routes = () => {
             backgroundColor: '#f0f0f5'
           }
         }}>
-        <RootStack.Screen name="Home" component={Home} />
         <RootStack.Screen name="Register" component={Register} />
         <RootStack.Screen name="Login" component={Login}/>
         <RootStack.Screen name="Points" component={Points} />

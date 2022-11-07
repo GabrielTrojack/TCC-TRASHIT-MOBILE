@@ -18,6 +18,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../RootStackPrams'
 
 import styles from './styles'
+import Trashbin from '../../assets/recycle-bin-title.svg'
 
 type authScreenProp = StackNavigationProp<RootStackParamList>
 
@@ -36,11 +37,11 @@ const Login = () => {
 
   async function handleLogin () {
     try {
-      await api.get('user/authent', { params: { email, password } })
+      const user = await api.get('user/authent', { params: { email, password } })
+      localStorage.setItem('user', JSON.stringify(user))
       pointNavigate()
     } catch (err) {
       alert(
-        // err.response.data.message
         JSON.stringify(err)
       )
     }
@@ -57,7 +58,7 @@ const Login = () => {
       imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
     >
       <View style={styles.main}>
-        <Image style={styles.image} source={require('../../assets/recycle-bin-title.png')} />
+      <Trashbin style={styles.image}/>
         <View>
           <Text style={styles.title}>Entre Na Sua Conta Para Solicitar Pontos De Coleta</Text>
         </View>
@@ -81,7 +82,13 @@ const Login = () => {
       value={password}
       onChangeText={setPassword}
       type={show ? 'text' : 'password'} InputRightElement={<Pressable onPress={() => setShow(!show)}>
-          <Icon as={<Feather name={show ? 'eye' : 'eye-off'} />} size={5} mr="2" color="muted.400" />
+          <Icon
+          as={<Feather name={show ? 'eye' : 'eye-off'} />}
+          size={5}
+          mr="2"
+          color="muted.400"
+          marginLeft={-8}
+          />
         </Pressable>}
       />
 

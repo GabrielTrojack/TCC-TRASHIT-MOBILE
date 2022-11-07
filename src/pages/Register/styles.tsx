@@ -15,7 +15,7 @@ export default StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 32,
-    // fontFamily: 'Ubuntu_700Bold',
+    // fontFamily: 'Ubuntu-Bold',
     maxWidth: 300,
     margin: 30
   },
@@ -70,8 +70,6 @@ export default StyleSheet.create({
     marginTop: 5
   },
   image: {
-    height: 210,
-    width: 150,
     marginLeft: 80
   },
   gotAcount: {

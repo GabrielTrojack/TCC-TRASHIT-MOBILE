@@ -74,7 +74,7 @@ export default StyleSheet.create({
 
   item: {
     backgroundColor: '#fff',
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: '#eee',
     height: 120,
     width: 120,
@@ -90,7 +90,7 @@ export default StyleSheet.create({
 
   selectedItem: {
     borderColor: '#34CB79',
-    borderWidth: 2
+    borderWidth: 4
   },
 
   itemTitle: {

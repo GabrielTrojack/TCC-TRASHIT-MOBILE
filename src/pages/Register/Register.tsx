@@ -26,6 +26,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../RootStackPrams'
 
 import styles from './styles'
+import Trashbin from '../../assets/recycle-bin-title.svg'
 
 type authScreenProp = StackNavigationProp<RootStackParamList, 'Login'>
 
@@ -46,16 +47,14 @@ const Register = () => {
   async function handleRegister () {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     password !== ConfPassword ? setInvalid(true) : null
-
     const data = {
       name,
       email,
       password,
+      city: localStorage.city,
+      uf: localStorage.uf,
       adm: false
     }
-
-    console.log(data)
-
     try {
       await api.post('user', data)
       loginNavigate()
@@ -76,10 +75,8 @@ const Register = () => {
         imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
       >
         <View style={styles.main}>
-          <Image
-            style={styles.image}
-            source={require('../../assets/recycle-bin-title.png')}
-          />
+
+        <Trashbin style={styles.image}/>
           <View>
             <Text style={styles.title}>
               Cadastre-se Para Solicitar Pontos de coleta
@@ -128,6 +125,7 @@ const Register = () => {
                       size={5}
                       mr="2"
                       color="muted.400"
+                      marginLeft={-8}
                     />
                   </Pressable>
                 }
@@ -149,6 +147,7 @@ const Register = () => {
                       size={5}
                       mr="2"
                       color="muted.400"
+                      marginLeft={-8}
                     />
                   </Pressable>
                 }
