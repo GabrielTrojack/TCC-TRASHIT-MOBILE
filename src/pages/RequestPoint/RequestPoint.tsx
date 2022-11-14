@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native'
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Image, Alert } from 'react-native'
 import { VStack, HStack, FormControl, Input, TextArea, Button } from 'native-base'
 import Svg from 'react-native-svg'
 import api from '../../services/api'
 import * as ImagePicker from 'expo-image-picker'
 import MapView from 'react-native-maps'
+import * as Location from 'expo-location'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../RootStackPrams'
@@ -27,7 +28,8 @@ const RequestPoint = () => {
   const [items, setItems] = useState<Item[]>([])
   const navigation = useNavigation<authScreenProp>()
   const [selectedItems, setSelectedItems] = useState<number[]>([])
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState<string>('')
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0])
 
   useEffect(() => {
     api.get('/category').then(response => {
@@ -59,48 +61,70 @@ const RequestPoint = () => {
       quality: 1
     })
 
-    console.log(result)
-
     if (!result.cancelled) {
       setImage(result.uri)
     }
   }
 
+  useEffect(() => {
+    async function loadPosition () {
+      const { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
+        return
+      }
+      const location = await Location.getCurrentPositionAsync()
+      const { latitude, longitude } = location.coords
+      setInitialPosition([latitude, longitude])
+    }
+    loadPosition()
+  })
+
   return (
     <KeyboardAvoidingView
     style={styles.container}
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={true}>
         <HStack>
-          <TouchableOpacity
-            onPress={handleNavigateBack}
-            >
+          <TouchableOpacity onPress={handleNavigateBack}>
               <Icon name="arrow-left" size={24} color="#fff" />
           </TouchableOpacity>
           <Text style={styles.title} >Solicitar Ponto de coleta</Text>
         </HStack>
 
-          <Button style={styles.camBtn} onPress={async () => await pickImage()}>
+          <Button style={!image ? styles.camBtn : styles.anxImg} onPress={async () => await pickImage()}>
             {image
-              ? <Image source={{ uri: image }} style={{ width: 300, height: 230 }} />
+              ? <Image source={{ uri: image }}
+              style={{ width: 310, height: 240, borderRadius: 8 }}
+              />
               : <VStack style={styles.camStack}>
                   <Icon name="camera" size={24} color="#2E8B57"/>
-                  <Text>
-                    Selecione uam imagem do locales
+                  <Text style={{ textAlign: 'center' }}>
+                    Selecione uma imagem do local
                   </Text>
                 </VStack>
             }
           </Button>
 
           <View style={styles.containe}>
-            <MapView style={styles.map}
-            initialRegion={{
-              latitude: -25.294572,
-              longitude: -54.096401,
-              latitudeDelta: 0.010,
-              longitudeDelta: 0.010
-            }}
-          />
+          {initialPosition[0] !== 0 && (
+        <MapView
+          style={styles.map}
+          // loadingEnabled={initialPosition[0] === 0}
+          initialRegion={{
+            latitude: initialPosition[0],
+            longitude: initialPosition[1],
+            longitudeDelta: 0.014,
+            latitudeDelta: 0.014
+          }}
+        >
+        </MapView>
+          )}
+      {initialPosition[0] === 0 && (
+        <View>
+          <Text style={styles.title}>Carregando...</Text>
+        </View>
+      )}
           </View>
 
         <Text style={styles.title} >Dados</Text>

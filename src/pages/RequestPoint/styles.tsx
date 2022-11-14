@@ -22,7 +22,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 8
+    marginTop: 8,
+    marginTop: '5%'
   },
   buttonText: {
     flex: 1,
@@ -46,7 +47,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     textAlign: 'center',
-    marginVertical: 30
+    marginVertical: '5%'
   },
 
   selectedItem: {
@@ -70,19 +71,21 @@ export default StyleSheet.create({
   camBtn: {
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: '8%',
+    padding: '1%',
     borderRadius: 8,
-    marginVertical: 30
+    marginVertical: 30,
+    height: '23%'
   },
   camStack: {
     alignItems: 'center',
     borderWidth: 2,
-    padding: '15%',
+    padding: '25%',
     borderRadius: 8,
     borderColor: '#2E8B57',
     borderStyle: 'dashed'
   },
   containe: {
+    margin: 5,
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -90,6 +93,13 @@ export default StyleSheet.create({
   },
   map: {
     width: '100%',
-    height: Dimensions.get('window').height
+    height: Dimensions.get('window').height / 2
+  },
+  anxImg: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    padding: '1%',
+    borderRadius: 8,
+    marginVertical: 30
   }
 })

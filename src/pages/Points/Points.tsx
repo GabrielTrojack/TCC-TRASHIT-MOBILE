@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useState, useEffect } from 'react'
 import { Feather as Icon } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { View, Text, StyleSheet, ScrollView, Image, SafeAreaView, Alert } from 'react-native'
+import { View, Text, ScrollView, SafeAreaView, Alert, Image } from 'react-native'
+import { HStack } from 'native-base'
 import MapView, { Marker } from 'react-native-maps'
-import Svg, { SvgUri } from 'react-native-svg'
+import Svg from 'react-native-svg'
 
 import * as Location from 'expo-location'
 import api from '../../services/api'
-import { HStack } from 'native-base'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../RootStackPrams'
@@ -20,22 +21,21 @@ type authScreenProp = StackNavigationProp<RootStackParamList>
 interface Item {
   id: number
   title: string
-  image_url: string
+  imageData: string
 }
 
 interface Point {
   id: number
   name: string
   image: string
-  image_url: string
-  latitude: number
-  longitude: number
+  latitude: string
+  longitude: string
 }
 
-interface Params {
-  uf: string
-  city: string
-}
+// interface Params {
+//   uf: string
+//   city: string
+// }
 
 const Points = () => {
   const [points, setPoints] = useState<Point[]>([])
@@ -44,7 +44,6 @@ const Points = () => {
   const navigation = useNavigation<authScreenProp>()
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const route = useRoute()
-  const routeParams = route.params as Params
 
   useEffect(() => {
     api.get('/category').then(response => {
@@ -64,12 +63,11 @@ const Points = () => {
     }
   }
 
-
   useEffect(() => {
-    api.get('points', {
+    api.get('pontocoleta', {
       params: {
-        city: routeParams.city,
-        uf: routeParams.uf,
+        // city: routeParams.city,
+        // uf: routeParams.uf,
         items: selectedItems
       }
     }).then(response => {
@@ -91,16 +89,9 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateBack () {
-    navigation.goBack()
+  function handleNavigateToDetail (id: number) {
+    navigation.navigate('Detail', { point_id: id })
   }
-
-  // function handleNavigateToDetail (id: number) {
-  //   navigation.navigate('Detail', { point_id: id })
-  // }
-  // function handleNavigateToDetail () {
-  //   navigation.navigate('Detail')
-  // }
 
   function handleNavigateToReqPoint () {
     navigation.navigate('RequestPoint')
@@ -109,34 +100,27 @@ const Points = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
-      <HStack style={styles.header}>
+      <View>
         <TouchableOpacity
-      onPress={handleNavigateBack}
-      >
-        <Icon name="arrow-left" size={20} color="#34cb79" />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-      onPress={handleNavigateToReqPoint}
-      style={styles.sugerirColeta}
-      >
+        onPress={handleNavigateToReqPoint}
+        style={styles.sugerirColeta}
+        >
         <HStack>
           <Icon name="map-pin" size={20} color="#34cb79"/>
           <Text style={styles.sugerirColetaTxT}>Solicitar Ponto</Text>
         </HStack>
       </TouchableOpacity>
-      </HStack>
+      </View>
 
       <Text style={styles.title}>Bem vindo</Text>
       <Text style={styles.description}>Encontre no mapa um ponto de coleta</Text>
 
       <View style={styles.mapContainer}>
 
-              {initialPosition[0] !== 0 && (
-
+      {initialPosition[0] !== 0 && (
         <MapView
           style={styles.map}
-          //loadingEnabled={initialPosition[0] === 0}
+          // loadingEnabled={initialPosition[0] === 0}
           initialRegion={{
             latitude: initialPosition[0],
             longitude: initialPosition[1],
@@ -150,32 +134,29 @@ const Points = () => {
               style={styles.mapMarker}
               onPress={() => handleNavigateToDetail(point.id)}
               coordinate={{
-                latitude: point.latitude,
-                longitude: point.longitude
+                latitude: parseFloat(point.latitude),
+                longitude: parseFloat(point.longitude)
               }}
             >
-            <View
-            style={styles.mapMarkerContainer}>
-              <Image
-                style={styles.mapMarkerImage}
-                source={{ uri: point.image_url }}>
-              </Image>
-              <Text>style={styles.mapMarkerTitle}>
+            <View style={styles.mapMarkerContainer}>
+            <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
+              <Text style={styles.mapMarkerTitle}>
                 {point.name}
               </Text>
             </View>
+            <View style={styles.triangle}></View>
             </Marker>
           ))}
         </MapView>
       )}
       {initialPosition[0] === 0 && (
-        <Text style={styles.title}>
-          Carregando..
-        </Text>
+        <View>
+          <Text style={styles.title}>Carregando...</Text>
+        </View>
       )}
+
       </View>
-    </View>
-    <View style={styles.itemsContainer}>
+      <View style={styles.itemsContainer}>
 
     <ScrollView horizontal={true}>
           {items.map(item => (
@@ -194,6 +175,8 @@ const Points = () => {
           ))}
           </ScrollView>
     </View>
+    </View>
+
   </SafeAreaView>
   )
 }

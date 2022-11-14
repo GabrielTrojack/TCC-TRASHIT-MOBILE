@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#322153"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -32,18 +32,18 @@
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": [
-      "expo.ts",
-      "expo.tsx",
-      "expo.js",
-      "expo.jsx",
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "wasm",
-      "svg"
-     ]
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
     }
   }
 }

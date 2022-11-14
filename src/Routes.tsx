@@ -6,6 +6,7 @@ import Points from './pages/Points/Points'
 import RequestPoint from './pages/RequestPoint/RequestPoint'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
+import Detail from './pages/Detail/Detail'
 
 const RootStack = createStackNavigator<RootStackParamList>()
 
@@ -15,6 +16,7 @@ export interface RootStackParamList {
   Login: undefined
   Home: undefined
   RequestPoint: undefined
+  Detail: undefined
 }
 
 const Routes = () => {
@@ -32,6 +34,7 @@ const Routes = () => {
         <RootStack.Screen name="Login" component={Login}/>
         <RootStack.Screen name="Points" component={Points} />
         <RootStack.Screen name="RequestPoint" component={RequestPoint} />
+        <RootStack.Screen name="Detail" component={Detail} />
       </RootStack.Navigator>
     </NavigationContainer>
   )

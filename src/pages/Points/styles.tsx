@@ -38,8 +38,10 @@ export default StyleSheet.create({
   },
 
   mapMarker: {
+    alignItems: 'center',
     width: 90,
-    height: 80
+    height: 85,
+    marginTop: -100
   },
 
   mapMarkerContainer: {
@@ -111,9 +113,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  header: {
-    justifyContent: 'space-between'
-  },
   sugerirColetaTxT: {
     color: '#34cb79',
     fontSize: 20,
@@ -121,10 +120,26 @@ export default StyleSheet.create({
     marginTop: -5
   },
   sugerirColeta: {
+    alignSelf: 'flex-end',
     borderWidth: 1,
     borderColor: '#34cb79',
     borderRadius: 7,
     paddingHorizontal: 3,
-    paddingVertical: 2
+    paddingVertical: 2,
+    width: '50%'
+  },
+  initialAnimation: {
+    marginTop: -50
+  },
+  triangle: {
+    width: 1,
+    borderTopWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 0,
+    borderLeftWidth: 12,
+    borderTopColor: '#34cb79',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: 'transparent'
   }
 })
