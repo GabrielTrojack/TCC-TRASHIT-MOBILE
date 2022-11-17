@@ -20,7 +20,7 @@ type authScreenProp = StackNavigationProp<RootStackParamList>
 interface Item {
   id: number
   title: string
-  image_url: string
+  imageData: string
 }
 
 interface Point {
@@ -52,7 +52,7 @@ const Points = () => {
     })
   }, [])
 
-  function handleSelectItem (id: number) {
+  function handleSelectItem(id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -68,8 +68,8 @@ const Points = () => {
   useEffect(() => {
     api.get('points', {
       params: {
-        city: routeParams.city,
-        uf: routeParams.uf,
+        // city: routeParams.city,
+        // uf: routeParams.uf,
         items: selectedItems
       }
     }).then(response => {
@@ -78,7 +78,7 @@ const Points = () => {
   }, [selectedItems])
 
   useEffect(() => {
-    async function loadPosition () {
+    async function loadPosition() {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -91,7 +91,7 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateBack () {
+  function handleNavigateBack() {
     navigation.goBack()
   }
 
@@ -102,99 +102,99 @@ const Points = () => {
   //   navigation.navigate('Detail')
   // }
 
-  function handleNavigateToReqPoint () {
+  function handleNavigateToReqPoint() {
     navigation.navigate('RequestPoint')
   }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <HStack style={styles.header}>
-        <TouchableOpacity
-      onPress={handleNavigateBack}
-      >
-        <Icon name="arrow-left" size={20} color="#34cb79" />
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <HStack style={styles.header}>
+          <TouchableOpacity
+            onPress={handleNavigateBack}
+          >
+            <Icon name="arrow-left" size={20} color="#34cb79" />
+          </TouchableOpacity>
 
-      <TouchableOpacity
-      onPress={handleNavigateToReqPoint}
-      style={styles.sugerirColeta}
-      >
-        <HStack>
-          <Icon name="map-pin" size={20} color="#34cb79"/>
-          <Text style={styles.sugerirColetaTxT}>Solicitar Ponto</Text>
+          <TouchableOpacity
+            onPress={handleNavigateToReqPoint}
+            style={styles.sugerirColeta}
+          >
+            <HStack>
+              <Icon name="map-pin" size={20} color="#34cb79" />
+              <Text style={styles.sugerirColetaTxT}>Solicitar Ponto</Text>
+            </HStack>
+          </TouchableOpacity>
         </HStack>
-      </TouchableOpacity>
-      </HStack>
 
-      <Text style={styles.title}>Bem vindo</Text>
-      <Text style={styles.description}>Encontre no mapa um ponto de coleta</Text>
+        <Text style={styles.title}>Bem vindo</Text>
+        <Text style={styles.description}>Encontre no mapa um ponto de coleta</Text>
 
-      <View style={styles.mapContainer}>
+        <View style={styles.mapContainer}>
 
-              {initialPosition[0] !== 0 && (
+          {initialPosition[0] !== 0 && (
 
-        <MapView
-          style={styles.map}
-          //loadingEnabled={initialPosition[0] === 0}
-          initialRegion={{
-            latitude: initialPosition[0],
-            longitude: initialPosition[1],
-            longitudeDelta: 0.014,
-            latitudeDelta: 0.014
-          }}
-        >
-          {points.map(point => (
-            <Marker
-              key={String(point.id)}
-              style={styles.mapMarker}
-              onPress={() => handleNavigateToDetail(point.id)}
-              coordinate={{
-                latitude: point.latitude,
-                longitude: point.longitude
+            <MapView
+              style={styles.map}
+              //loadingEnabled={initialPosition[0] === 0}
+              initialRegion={{
+                latitude: initialPosition[0],
+                longitude: initialPosition[1],
+                longitudeDelta: 0.014,
+                latitudeDelta: 0.014
               }}
             >
-            <View
-            style={styles.mapMarkerContainer}>
-              <Image
-                style={styles.mapMarkerImage}
-                source={{ uri: point.image_url }}>
-              </Image>
-              <Text>style={styles.mapMarkerTitle}>
-                {point.name}
-              </Text>
-            </View>
-            </Marker>
-          ))}
-        </MapView>
-      )}
-      {initialPosition[0] === 0 && (
-        <Text style={styles.title}>
-          Carregando..
-        </Text>
-      )}
+              {points.map(point => (
+                <Marker
+                  key={String(point.id)}
+                  style={styles.mapMarker}
+                  onPress={() => handleNavigateToDetail(point.id)}
+                  coordinate={{
+                    latitude: point.latitude,
+                    longitude: point.longitude
+                  }}
+                >
+                  <View
+                    style={styles.mapMarkerContainer}>
+                    <Image
+                      style={styles.mapMarkerImage}
+                      source={{ uri: point.image_url }}>
+                    </Image>
+                    <Text>style={styles.mapMarkerTitle}>
+                      {point.name}
+                    </Text>
+                  </View>
+                </Marker>
+              ))}
+            </MapView>
+          )}
+          {initialPosition[0] === 0 && (
+            <Text style={styles.title}>
+              Carregando..
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
-    <View style={styles.itemsContainer}>
+      <View style={styles.itemsContainer}>
 
-    <ScrollView horizontal={true}>
+        <ScrollView horizontal={true}>
           {items.map(item => (
-              <TouchableOpacity
-                key={String(item.id)}
-                style={[
-                  styles.item,
-                  selectedItems.includes(item.id) ? styles.selectedItem : {}
-                ]}
-                onPress={() => handleSelectItem(item.id)}
-                activeOpacity={0.6}
-              >
-                <Svg height={30} width={30}/>
-            <Text style={styles.itemTitle}>{item.title}</Text>
+            <TouchableOpacity
+              key={String(item.id)}
+              style={[
+                styles.item,
+                selectedItems.includes(item.id) ? styles.selectedItem : {}
+              ]}
+              onPress={() => handleSelectItem(item.id)}
+              activeOpacity={0.6}
+            >
+              <SvgUri uri={`http://192.168.3.59:3333/uploads/${item.imageData}`} height={30} width={30} />
+              <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
           ))}
-          </ScrollView>
-    </View>
-  </SafeAreaView>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   )
 }
 
