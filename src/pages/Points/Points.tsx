@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useState, useEffect } from 'react'
 import { Feather as Icon } from '@expo/vector-icons'
@@ -6,7 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { View, Text, ScrollView, SafeAreaView, Alert, Image } from 'react-native'
 import { HStack } from 'native-base'
 import MapView, { Marker } from 'react-native-maps'
-import Svg from 'react-native-svg'
+import { SvgUri } from 'react-native-svg'
 
 import * as Location from 'expo-location'
 import api from '../../services/api'
@@ -43,11 +44,12 @@ const Points = () => {
   const [items, setItems] = useState<Item[]>([])
   const navigation = useNavigation<authScreenProp>()
   const [selectedItems, setSelectedItems] = useState<number[]>([])
-  const route = useRoute()
+  // const route = useRoute()
 
   useEffect(() => {
     api.get('/category').then(response => {
       setItems(response.data)
+      console.log(items)
     })
   }, [])
 
@@ -98,6 +100,7 @@ const Points = () => {
   }
 
   return (
+  <>
     <SafeAreaView style={{ flex: 1 }}>
     <View style={styles.container}>
       <View>
@@ -157,27 +160,27 @@ const Points = () => {
 
       </View>
       <View style={styles.itemsContainer}>
-
-    <ScrollView horizontal={true}>
+      <ScrollView horizontal={true}>
           {items.map(item => (
-              <TouchableOpacity
-                key={String(item.id)}
-                style={[
-                  styles.item,
-                  selectedItems.includes(item.id) ? styles.selectedItem : {}
-                ]}
-                onPress={() => handleSelectItem(item.id)}
-                activeOpacity={0.6}
-              >
-                <Svg height={30} width={30}/>
-            <Text style={styles.itemTitle}>{item.title}</Text>
+            <TouchableOpacity
+              key={String(item.id)}
+              style={[
+                styles.item,
+                selectedItems.includes(item.id) ? styles.selectedItem : {}
+              ]}
+              onPress={() => handleSelectItem(item.id)}
+              activeOpacity={0.6}
+            >
+              <SvgUri uri={`http://192.168.3.59:3333/uploads/${item.imageData}`} height={30} width={30} />
+              <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
           ))}
-          </ScrollView>
+        </ScrollView>
     </View>
     </View>
 
   </SafeAreaView>
+  </>
   )
 }
 

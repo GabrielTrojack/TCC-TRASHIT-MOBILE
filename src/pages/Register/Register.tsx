@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState } from 'react'
@@ -8,7 +9,8 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native'
 import {
   Input,
@@ -44,15 +46,15 @@ const Register = () => {
     navigation.navigate('Login')
   }
 
-  async function handleRegister () {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  function handelSetPassword (password) {
     password !== ConfPassword ? setInvalid(true) : null
+  }
+
+  async function handleRegister () {
     const data = {
       name,
       email,
       password,
-      city: localStorage.city,
-      uf: localStorage.uf,
       adm: false
     }
     try {
@@ -77,6 +79,7 @@ const Register = () => {
         <View style={styles.main}>
 
         <Trashbin style={styles.image}/>
+
           <View>
             <Text style={styles.title}>
               Cadastre-se Para Solicitar Pontos de coleta
@@ -160,12 +163,12 @@ const Register = () => {
             </FormControl>
           </Stack>
 
-          <Button
+          <TouchableOpacity
             style={styles.button}
             onPress={async () => await handleRegister()}
           >
             <Text style={styles.buttonText}>Cadastrar</Text>
-          </Button>
+          </TouchableOpacity>
           <Button
             style={styles.gotAcount}
             variant="ghost"

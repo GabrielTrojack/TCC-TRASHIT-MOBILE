@@ -58,7 +58,8 @@ const Login = () => {
       imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
     >
       <View style={styles.main}>
-      <Trashbin style={styles.image}/>
+      {/* <Trashbin style={styles.image}/> */}
+      <Image source={require('../../assets/recycle-bin-title.png')}/>
         <View>
           <Text style={styles.title}>Entre Na Sua Conta Para Solicitar Pontos De Coleta</Text>
         </View>

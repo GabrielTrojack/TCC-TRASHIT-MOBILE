@@ -23,7 +23,7 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <RootStack.Navigator
-        initialRouteName="Points"
+        initialRouteName="Register"
         screenOptions={{
           headerShown: false,
           cardStyle: {
