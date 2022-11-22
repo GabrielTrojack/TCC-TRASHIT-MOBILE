@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Feather as Icon } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { View, Text, ScrollView, SafeAreaView, Alert, Image } from 'react-native'
 import { HStack } from 'native-base'
 import MapView, { Marker } from 'react-native-maps'
@@ -19,10 +19,6 @@ import { RootStackParamList } from '../RootStackPrams'
 import styles from './styles'
 
 type authScreenProp = StackNavigationProp<RootStackParamList, 'Detail'>
-
-interface User {
-  user: boolean
-}
 
 interface Item {
   id: number
@@ -60,7 +56,7 @@ const Points = () => {
     })
   }, [])
 
-  function handleSelectItem(id: number) {
+  function handleSelectItem (id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -98,7 +94,7 @@ const Points = () => {
   }, [selectedItems])
 
   useEffect(() => {
-    async function loadPosition() {
+    async function loadPosition () {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -111,23 +107,22 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateToDetail(id: number) {
+  function handleNavigateToDetail (id: number) {
     navigation.navigate('Detail', { point_id: id })
   }
 
-  function handleNavigateToReqPoint() {
+  function handleNavigateToReqPoint () {
     navigation.navigate('RequestPoint')
   }
-  function handleNavigateToLogin() {
+  function handleNavigateToLogin () {
     navigation.navigate('Login')
   }
 
   const getData = async () => {
     try {
       const user = await AsyncStorage.getItem('@storage_Key')
-      console.log(user)
-      user != null ? handleNavigateToReqPoint() : handleNavigateToLogin()
-    } catch (e) {
+      user !== null ? handleNavigateToReqPoint() : handleNavigateToLogin()
+    } catch (error) {
       // error reading value
     }
   }
@@ -207,8 +202,8 @@ const Points = () => {
                   activeOpacity={0.6}
                 >
                   <SvgUri
-                    // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                    uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
+                    uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                    // uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
                     height={30} width={30} />
                   <Text style={styles.itemTitle}>{item.title}</Text>
                 </TouchableOpacity>

@@ -44,6 +44,14 @@ export default StyleSheet.create({
     marginTop: -100
   },
 
+  mapMarkerPendent: {
+    opacity: 1,
+    alignItems: 'center',
+    width: 90,
+    height: 85,
+    marginTop: -100
+  },
+
   mapMarkerContainer: {
     width: 90,
     height: 70,

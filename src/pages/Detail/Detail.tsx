@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useState } from 'react'
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
@@ -24,6 +26,7 @@ interface Data {
   cellphone: string
   city: string
   uf: string
+  description: string
 }
 
 interface Point {
@@ -40,7 +43,7 @@ type authScreenProp = StackNavigationProp<RootStackParamList>
 const Detail = () => {
   const navigate = useNavigation<authScreenProp>()
   const [data, setData] = useState<Data>({} as Data)
-  const [points, setPoints] = useState([])
+  const [categories, setCategories] = useState<any>()
 
   const route = useRoute()
 
@@ -49,6 +52,17 @@ const Detail = () => {
   useEffect(() => {
     api.get(`pontocoleta/${routeParams.point_id}`).then(response => {
       setData(response.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    api.get('pontocoleta/findCategoriesByPoint', {
+      params: {
+        id_ponto: routeParams.point_id
+      }
+    }).then(response => {
+      setCategories(response.tb_ponto_categorias.id_category)
+      console.log(categories)
     })
   }, [])
 
@@ -61,7 +75,6 @@ const Detail = () => {
       subject: 'Interese na coleta de residuos',
       recipients: [data.email]
     })
-    console.log(data.email)
   }
 
   function handleWhatsapp () {
@@ -85,16 +98,18 @@ const Detail = () => {
         <Image style={styles.pointImage} source={{ uri: data.image }} />
 
         <Text style={styles.pointName}>{data.name}</Text>
-        {/* <Text style={styles.pointItems}>
-            {data.items.map(item => item.title).join(', ')}
-          </Text> */}
+        {(data.description !== '') ? <Text style={styles.addressContent}>{data.description} </Text> : null}
+
+        <Text style={styles.addressTitle}>Este  ponto recolhe:</Text>
+        <Text style={styles.addressContent}></Text>
 
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Endereço</Text>
           <Text style={styles.addressContent}>{data.city}, {data.uf} </Text>
         </View>
       </View>
-      <View style={styles.footer}>
+      {(data.cellphone !== '')
+        ? <View style={styles.footer}>
         <RectButton style={styles.buttonZap}
           onPress={handleWhatsapp}
         >
@@ -108,6 +123,7 @@ const Detail = () => {
           <Text style={styles.buttonText}>E-mail</Text>
         </RectButton>
       </View>
+        : null}
     </SafeAreaView>
   )
 }
