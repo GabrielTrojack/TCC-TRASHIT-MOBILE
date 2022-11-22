@@ -35,19 +35,12 @@ type authScreenProp = StackNavigationProp<RootStackParamList, 'Login'>
 const Register = () => {
   const navigation = useNavigation<authScreenProp>()
   const [show, setShow] = useState(false)
-  const [ConfShow, setConfShow] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [ConfPassword, setConfPassword] = useState('')
-  const [invalid, setInvalid] = useState(false)
 
   function loginNavigate () {
     navigation.navigate('Login')
-  }
-
-  function handelSetPassword (password) {
-    password !== ConfPassword ? setInvalid(true) : null
   }
 
   async function handleRegister () {
@@ -66,7 +59,6 @@ const Register = () => {
   }
 
   return (
-    <ScrollView>
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -134,33 +126,6 @@ const Register = () => {
                 }
               />
             </FormControl>
-            <FormControl isInvalid={invalid}>
-              <Input
-                style={styles.input}
-                size="2xl"
-                variant={invalid ? 'outline' : 'unstyled'}
-                placeholder="Confirme a senha"
-                value={ConfPassword}
-                onChangeText={setConfPassword}
-                type={ConfShow ? 'text' : 'password'}
-                InputRightElement={
-                  <Pressable style={styles.pressable} onPress={() => setConfShow(!ConfShow)}>
-                    <Icon
-                      as={<Feather name={ConfShow ? 'eye' : 'eye-off'} />}
-                      size={5}
-                      mr="2"
-                      color="muted.400"
-                      marginLeft={-8}
-                    />
-                  </Pressable>
-                }
-              />
-              <FormControl.ErrorMessage
-                leftIcon={<Feather name="alert-circle" size={2} mr="2" />}
-              >
-                As senhas devem ser iguais
-              </FormControl.ErrorMessage>
-            </FormControl>
           </Stack>
 
           <TouchableOpacity
@@ -179,7 +144,6 @@ const Register = () => {
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
-    </ScrollView>
   )
 }
 

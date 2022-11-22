@@ -54,6 +54,16 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
 
+  mapMarkerContainerPendent: {
+    width: 90,
+    height: 70,
+    backgroundColor: '#c59117',
+    flexDirection: 'column',
+    borderRadius: 8,
+    overflow: 'hidden',
+    alignItems: 'center'
+  },
+
   mapMarkerImage: {
     width: 90,
     height: 45,
@@ -138,6 +148,17 @@ export default StyleSheet.create({
     borderBottomWidth: 0,
     borderLeftWidth: 12,
     borderTopColor: '#34cb79',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: 'transparent'
+  },
+  trianglePendent: {
+    width: 1,
+    borderTopWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 0,
+    borderLeftWidth: 12,
+    borderTopColor: '#c59117',
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: 'transparent'

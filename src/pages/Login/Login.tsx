@@ -13,6 +13,7 @@ import { Input, Pressable, Icon, Button } from 'native-base'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import api from '../../services/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../RootStackPrams'
@@ -31,19 +32,27 @@ const Login = () => {
   function signinNavigate () {
     navigation.navigate('Register')
   }
-  function pointNavigate () {
-    navigation.navigate('Points')
+  function ReqNavigate () {
+    navigation.navigate('RequestPoint')
   }
 
   async function handleLogin () {
     try {
       const user = await api.get('user/authent', { params: { email, password } })
-      localStorage.setItem('user', JSON.stringify(user))
+      storeData(user)
       pointNavigate()
     } catch (err) {
       alert(
         JSON.stringify(err)
       )
+    }
+  }
+
+  const storeData = async (user: string) => {
+    try {
+      const jsonValue = JSON.stringify(user)
+      await AsyncStorage.setItem('@storage_Key', jsonValue)
+    } catch (e) {
     }
   }
 
@@ -58,8 +67,8 @@ const Login = () => {
       imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
     >
       <View style={styles.main}>
-      {/* <Trashbin style={styles.image}/> */}
-      <Image source={require('../../assets/recycle-bin-title.png')}/>
+      <Trashbin style={styles.image}/>
+      {/* <Image source={require('../../assets/recycle-bin-title.png')}/> */}
         <View>
           <Text style={styles.title}>Entre Na Sua Conta Para Solicitar Pontos De Coleta</Text>
         </View>

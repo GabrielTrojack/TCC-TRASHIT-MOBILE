@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import React, { useEffect, useState } from 'react'
 import { Feather as Icon, FontAwesome } from '@expo/vector-icons'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -21,7 +22,7 @@ interface Data {
     image_url: string
     name: string
     email: string
-    whatsapp: string
+    cellphone: string
     city: string
     uf: string
   }
@@ -53,24 +54,24 @@ const Detail = () => {
   useEffect(() => {
     api.get(`pontocoleta/${routeParams.point_id}`).then(response => {
       setData(response.data)
+      console.log(response.data.name)
     })
   }, [])
 
   function handleNavigateBack () {
     navigate.goBack()
   }
-  console.log(data)
 
-  // function handleComposeMail () {
-  //   MailComposer.composeAsync({
-  //     subject: 'Interese na coleta de residuos',
-  //     recipients: [data.point.email]
-  //   })
-  // }
+  function handleComposeMail () {
+    MailComposer.composeAsync({
+      subject: 'Interese na coleta de residuos',
+      recipients: [data.point.email]
+    })
+  }
 
-  // function handleWhatsapp () {
-  //   Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text=Tenho interrese sobre coleta de residuos`)
-  // }
+  function handleWhatsapp () {
+    Linking.openURL(`whatsapp://send?phone=${data.point.cellphone}&text=Tenho interrese sobre coleta de residuos`)
+  }
 
   // if (!data.point) {
   //   return null
@@ -100,13 +101,13 @@ const Detail = () => {
       </View>
       <View style={styles.footer}>
         <RectButton style={styles.buttonZap}
-        // onPress={handleWhatsapp}
+        onPress={handleWhatsapp}
         >
           <FontAwesome name="whatsapp" size={20} color="#FFF" />
           <Text style={styles.buttonText}>Whatsapp</Text>
         </RectButton>
         <RectButton style={styles.buttonMail}
-        //  onPress={handleComposeMail}
+         onPress={handleComposeMail}
          >
           <Icon name="mail" size={20} color="#FFF" />
           <Text style={styles.buttonText}>E-mail</Text>

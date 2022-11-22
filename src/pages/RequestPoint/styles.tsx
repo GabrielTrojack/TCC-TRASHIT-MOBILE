@@ -3,15 +3,15 @@ import { StyleSheet, Dimensions } from 'react-native'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 50,
-    paddingHorizontal: 32,
+    paddingVertical: '12%',
+    paddingHorizontal: '7%',
     backgroundColor: '#322153'
   },
   title: {
     color: '#fff',
     fontSize: 24,
-    marginHorizontal: 10,
-    marginTop: -5
+    marginHorizontal: '3%',
+    marginTop: '-2%'
   },
   input: {
     backgroundColor: '#fff'
@@ -22,8 +22,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 8,
-    marginTop: '5%'
+    marginBottom: '10%'
   },
   buttonText: {
     flex: 1,
@@ -74,7 +73,7 @@ export default StyleSheet.create({
     padding: '1%',
     borderRadius: 8,
     marginVertical: 30,
-    height: '23%'
+    height: '20%'
   },
   camStack: {
     alignItems: 'center',
@@ -101,5 +100,15 @@ export default StyleSheet.create({
     padding: '1%',
     borderRadius: 8,
     marginVertical: 30
+  },
+  backButton: {
+    top: 5
+  },
+  itemsContainer: {
+    flexDirection: 'row',
+    marginVertical: '-6%'
+  },
+  select: {
+    marginVertical: '3%'
   }
 })

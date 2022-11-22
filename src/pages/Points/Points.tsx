@@ -8,6 +8,7 @@ import { View, Text, ScrollView, SafeAreaView, Alert, Image } from 'react-native
 import { HStack } from 'native-base'
 import MapView, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import * as Location from 'expo-location'
 import api from '../../services/api'
@@ -17,7 +18,11 @@ import { RootStackParamList } from '../RootStackPrams'
 
 import styles from './styles'
 
-type authScreenProp = StackNavigationProp<RootStackParamList>
+type authScreenProp = StackNavigationProp<RootStackParamList, 'Detail'>
+
+interface User {
+  user: boolean
+}
 
 interface Item {
   id: number
@@ -31,6 +36,9 @@ interface Point {
   image: string
   latitude: string
   longitude: string
+  status: string
+  cellphone: string
+  email: string
 }
 
 // interface Params {
@@ -49,7 +57,6 @@ const Points = () => {
   useEffect(() => {
     api.get('/category').then(response => {
       setItems(response.data)
-      console.log(items)
     })
   }, [])
 
@@ -66,15 +73,28 @@ const Points = () => {
   }
 
   useEffect(() => {
-    api.get('pontocoleta', {
-      params: {
-        // city: routeParams.city,
-        // uf: routeParams.uf,
-        items: selectedItems
-      }
-    }).then(response => {
-      setPoints(response.data)
-    })
+    if (selectedItems.length === 0) {
+      api.get('/pontocoleta').then(response => {
+        setPoints(response.data)
+      })
+    } else {
+      api.get('pontocoleta/findCa', {
+        params: {
+          id_category: selectedItems
+        }
+      }).then(response => {
+        const arr = []
+        if (response.data.length === 0) {
+          setPoints([])
+        } else {
+          for (let i = 0; i < response.data.length; i++) {
+            const a = response.data[i].tb_ponto_coletum
+            arr.push(a)
+            setPoints(arr)
+          }
+        }
+      })
+    }
   }, [selectedItems])
 
   useEffect(() => {
@@ -98,6 +118,19 @@ const Points = () => {
   function handleNavigateToReqPoint () {
     navigation.navigate('RequestPoint')
   }
+  function handleNavigateToLogin () {
+    navigation.navigate('Login')
+  }
+
+  const getData = async () => {
+    try {
+      const user = await AsyncStorage.getItem('@storage_Key')
+      console.log(user)
+      user != null ? handleNavigateToReqPoint() : handleNavigateToLogin()
+    } catch (e) {
+      // error reading value
+    }
+  }
 
   return (
   <>
@@ -105,7 +138,7 @@ const Points = () => {
     <View style={styles.container}>
       <View>
         <TouchableOpacity
-        onPress={handleNavigateToReqPoint}
+        onPress={getData}
         style={styles.sugerirColeta}
         >
         <HStack>
@@ -141,13 +174,13 @@ const Points = () => {
                 longitude: parseFloat(point.longitude)
               }}
             >
-            <View style={styles.mapMarkerContainer}>
+            <View style={point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainer}>
             <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
               <Text style={styles.mapMarkerTitle}>
                 {point.name}
               </Text>
             </View>
-            <View style={styles.triangle}></View>
+            <View style={point.status === 'Pendente' ? styles.trianglePendent : styles.triangle}></View>
             </Marker>
           ))}
         </MapView>
@@ -171,7 +204,10 @@ const Points = () => {
               onPress={() => handleSelectItem(item.id)}
               activeOpacity={0.6}
             >
-              <SvgUri uri={`http://192.168.3.59:3333/uploads/${item.imageData}`} height={30} width={30} />
+              <SvgUri
+                // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                height={30} width={30} />
               <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>
           ))}
