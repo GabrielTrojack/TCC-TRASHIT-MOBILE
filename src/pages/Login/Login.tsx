@@ -40,7 +40,7 @@ const Login = () => {
     try {
       const user = await api.get('user/authent', { params: { email, password } })
       storeData(user)
-      pointNavigate()
+      ReqNavigate()
     } catch (err) {
       alert(
         JSON.stringify(err)

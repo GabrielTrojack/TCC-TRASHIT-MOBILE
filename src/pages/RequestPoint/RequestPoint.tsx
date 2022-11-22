@@ -7,24 +7,21 @@ import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons'
 import {
   View,
-  Text,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
   Image
 } from 'react-native'
 import {
+  Text,
   VStack,
   HStack,
   FormControl,
   Input,
   TextArea,
   Button,
-  Alert,
-  // IconButton,
-  // CloseIcon,
-  // Center,
   Select,
   CheckIcon
 } from 'native-base'
@@ -121,7 +118,7 @@ const RequestPoint = () => {
     }
   }
 
-  function handleNavigateBack () {
+  function handleNavigateToPoints () {
     navigation.navigate('Points')
   }
 
@@ -143,7 +140,6 @@ const RequestPoint = () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
-        return
       }
       const location = await Location.getCurrentPositionAsync()
       const { latitude, longitude } = location.coords
@@ -169,33 +165,12 @@ const RequestPoint = () => {
       street
     }
     try {
-      console.log(data)
       await api.post('pontocoleta', data)
+      handleNavigateToPoints()
     } catch (err) {
       alert(JSON.stringify(err))
     }
   }
-
-  // function Alert () {
-  //   return <Center>
-  //       <Alert>
-  //           <VStack space={2} flexShrink={1} w="100%">
-  //             <HStack flexShrink={1} space={2} justifyContent="space-between">
-  //               <HStack space={2} flexShrink={1}>
-  //                 <Text>
-  //                   Ponto solicitado com sucesso
-  //                 </Text>
-  //               </HStack>
-  //               <IconButton variant="unstyled" _focus={{
-  //                 borderWidth: 0
-  //               }} icon={<CloseIcon size="3" />} _icon={{
-  //                 color: 'coolGray.600'
-  //               }} />
-  //             </HStack>
-  //           </VStack>
-  //         </Alert>
-  //     </Center>
-  // }
 
   return (
     <KeyboardAvoidingView
@@ -206,7 +181,7 @@ const RequestPoint = () => {
         <HStack>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={handleNavigateBack}
+          onPress={handleNavigateToPoints}
           >
             <Icon name="arrow-left" size={20} color="#34cb79" />
           </TouchableOpacity>
