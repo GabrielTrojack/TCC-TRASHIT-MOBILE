@@ -174,148 +174,148 @@ const RequestPoint = () => {
 
   return (
     <KeyboardAvoidingView
-    style={styles.container}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
-      showsVerticalScrollIndicator={true}>
+        showsVerticalScrollIndicator={true}>
         <HStack>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={handleNavigateToPoints}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleNavigateToPoints}
           >
             <Icon name="arrow-left" size={20} color="#34cb79" />
           </TouchableOpacity>
           <Text style={styles.title} >Solicitar Ponto de coleta</Text>
         </HStack>
 
-          <Button style={!image ? styles.camBtn : styles.anxImg} onPress={async () => await pickImage()}>
-            {image
-              ? <Image source={{ uri: image }}
+        <Button style={!image ? styles.camBtn : styles.anxImg} onPress={async () => await pickImage()}>
+          {image
+            ? <Image source={{ uri: image }}
               style={{ width: 310, height: 240, borderRadius: 8 }}
-              />
-              : <VStack style={styles.camStack}>
-                  <Icon name="camera" size={24} color="#2E8B57"/>
-                  <Text style={{ textAlign: 'center' }}>
-                    Selecione uma imagem do local
-                  </Text>
-                </VStack>
-            }
-          </Button>
+            />
+            : <VStack style={styles.camStack}>
+              <Icon name="camera" size={24} color="#2E8B57" />
+              <Text style={{ textAlign: 'center' }}>
+                Selecione uma imagem do local
+              </Text>
+            </VStack>
+          }
+        </Button>
 
-          <Text style={styles.title} >Dados</Text>
-          <View style={styles.containe}>
-            {initialPosition[0] !== 0 && (
-              <MapView
-                style={styles.map}
-                // loadingEnabled={initialPosition[0] === 0}
-                onPress={ (event: any) => {
-                  setCoordinate(
-                    [event.nativeEvent.coordinate.latitude,
-                      event.nativeEvent.coordinate.longitude
-                    ])
-                  console.log(event.nativeEvent.coordinate)
-                } }
-                initialRegion={{
-                  latitude: initialPosition[0],
-                  longitude: initialPosition[1],
-                  longitudeDelta: 0.014,
-                  latitudeDelta: 0.014
-                }}>
-                <Marker coordinate={{
-                  latitude: coordinate[0] ? coordinate[0] : initialPosition[0],
-                  longitude: coordinate[1] ? coordinate[1] : initialPosition[1]
-                }}/>
-              </MapView>
-            )}
-      {initialPosition[0] === 0 && (
-        <View>
-          <Text style={styles.title}>Carregando...</Text>
+        <Text style={styles.title} >Dados</Text>
+        <View style={styles.containe}>
+          {initialPosition[0] !== 0 && (
+            <MapView
+              style={styles.map}
+              // loadingEnabled={initialPosition[0] === 0}
+              onPress={(event: any) => {
+                setCoordinate(
+                  [event.nativeEvent.coordinate.latitude,
+                    event.nativeEvent.coordinate.longitude
+                  ])
+                console.log(event.nativeEvent.coordinate)
+              }}
+              initialRegion={{
+                latitude: initialPosition[0],
+                longitude: initialPosition[1],
+                longitudeDelta: 0.014,
+                latitudeDelta: 0.014
+              }}>
+              <Marker coordinate={{
+                latitude: coordinate[0] ? coordinate[0] : initialPosition[0],
+                longitude: coordinate[1] ? coordinate[1] : initialPosition[1]
+              }} />
+            </MapView>
+          )}
+          {initialPosition[0] === 0 && (
+            <View>
+              <Text style={styles.title}>Carregando...</Text>
+            </View>
+          )}
         </View>
-      )}
-          </View>
 
         <Text style={styles.title} >Daaados</Text>
 
         <FormControl w="100%">
           <FormControl.Label >Seu nome</FormControl.Label>
-          <Input style={styles.input} onChangeText={setName}/>
+          <Input style={styles.input} onChangeText={setName} />
         </FormControl>
 
         <FormControl w="100%">
           <FormControl.Label >Informar motivo da solicitação</FormControl.Label>
-          <TextArea autoCompleteType={false} style={styles.input} onChangeText={setDescription}/>
+          <TextArea autoCompleteType={false} style={styles.input} onChangeText={setDescription} />
         </FormControl>
 
-      <View style={styles.select}>
-        <Select
-        mt={1}
-        selectedValue={selectedUf}
-        minWidth="200"
-        minHeight="60"
-        placeholder="Uf"
-        backgroundColor={'#fff'}
-        color="#000"
-        onValueChange={(value) => handleSelectUf(value)}
-        _selectedItem={{
-          bg: '#d4d4d4',
-          endIcon: <CheckIcon size="5" />
-        }}
-        >
+        <View style={styles.select}>
+          <Select
+            mt={1}
+            selectedValue={selectedUf}
+            minWidth="200"
+            minHeight="60"
+            placeholder="Uf"
+            backgroundColor={'#fff'}
+            color="#000"
+            onValueChange={(value) => handleSelectUf(value)}
+            _selectedItem={{
+              bg: '#d4d4d4',
+              endIcon: <CheckIcon size="5" />
+            }}
+          >
             <Select.Item label="Selecione sua UF" value="ux" />
             {uf.map(uf => (
-                 <Select.Item key={uf} value={uf} label={uf}/>
+              <Select.Item key={uf} value={uf} label={uf} />
             ))}
 
-        </Select>
-      </View>
-      <View style={styles.select}>
-        <Select
-        mt={1}
-        selectedValue={selectedCity}
-        minWidth="200"
-        minHeight="60"
-        placeholder="Cidade"
-        backgroundColor={'#fff'}
-        color="#000"
-        onValueChange={(value) => handleSelectCity(value)}
-        _selectedItem={{
-          bg: '#d4d4d4',
-          endIcon: <CheckIcon size="5" />
-        }}
-        >
+          </Select>
+        </View>
+        <View style={styles.select}>
+          <Select
+            mt={1}
+            selectedValue={selectedCity}
+            minWidth="200"
+            minHeight="60"
+            placeholder="Cidade"
+            backgroundColor={'#fff'}
+            color="#000"
+            onValueChange={(value) => handleSelectCity(value)}
+            _selectedItem={{
+              bg: '#d4d4d4',
+              endIcon: <CheckIcon size="5" />
+            }}
+          >
             <Select.Item label="Selecione sua UF" value="ux" />
             {city.map(city => (
-                 <Select.Item key={city} value={city} label={city }/>
+              <Select.Item key={city} value={city} label={city} />
             ))}
 
-        </Select>
+          </Select>
 
-        <FormControl w="100%">
-          <FormControl.Label >Endereço</FormControl.Label>
-          <Input style={styles.input} onChangeText={setStreet}/>
-        </FormControl>
-  </View>
+          <FormControl w="100%">
+            <FormControl.Label >Endereço</FormControl.Label>
+            <Input style={styles.input} onChangeText={setStreet} />
+          </FormControl>
+        </View>
 
         <View style={styles.itemsContainer}>
-        <ScrollView horizontal={true}>
-          {items.map(item => (
-            <TouchableOpacity
-              key={String(item.id)}
-              style={[
-                styles.item,
-                selectedItems.includes(item.id) ? styles.selectedItem : {}
-              ]}
-              onPress={() => handleSelectItem(item.id)}
-              activeOpacity={0.6}
-             >
-              <SvgUri
-                uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
-                height={30} width={30} />
-              <Text style={styles.itemTitle}>{item.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+          <ScrollView horizontal={true}>
+            {items.map(item => (
+              <TouchableOpacity
+                key={String(item.id)}
+                style={[
+                  styles.item,
+                  selectedItems.includes(item.id) ? styles.selectedItem : {}
+                ]}
+                onPress={() => handleSelectItem(item.id)}
+                activeOpacity={0.6}
+              >
+                <SvgUri
+                  uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
+                  // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                  height={30} width={30} />
+                <Text style={styles.itemTitle}>{item.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
 
         <Button style={styles.button}
@@ -326,8 +326,8 @@ const RequestPoint = () => {
           </Text>
         </Button>
 
-        </ScrollView>
-  </KeyboardAvoidingView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 
