@@ -28,6 +28,14 @@ export default StyleSheet.create({
     // fontFamily: 'Ubuntu_700Bold',
     marginTop: 24
   },
+  pointStatus: {
+    color: '#fff',
+    fontSize: 28,
+    // fontFamily: 'Ubuntu_700Bold',
+    marginTop: 44,
+    marginLeft: '20%',
+    textAlign: 'center'
+  },
 
   pointItems: {
     // fontFamily: 'Roboto_400Regular',
