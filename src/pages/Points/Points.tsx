@@ -61,7 +61,7 @@ const Points = () => {
     })
   }, [])
 
-  function handleSelectItem (id: number) {
+  function handleSelectItem(id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -96,10 +96,10 @@ const Points = () => {
         }
       })
     }
-  }, [selectedItems])
+  }, [selectedItems, refreshing])
 
   useEffect(() => {
-    async function loadPosition () {
+    async function loadPosition() {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -112,14 +112,14 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateToDetail (id: number) {
+  function handleNavigateToDetail(id: number) {
     navigation.navigate('Detail', { point_id: id })
   }
 
-  function handleNavigateToReqPoint () {
+  function handleNavigateToReqPoint() {
     navigation.navigate('RequestPoint')
   }
-  function handleNavigateToLogin () {
+  function handleNavigateToLogin() {
     navigation.navigate('Login')
   }
 
@@ -141,94 +141,94 @@ const Points = () => {
     <>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-        <View extend type style={styles.container}>
-          <View>
-            <TouchableOpacity
-              onPress={getData}
-              style={styles.sugerirColeta}
-            >
-              <HStack>
-                <Icon name="map-pin" size={20} color="#34cb79" />
-                <Text style={styles.sugerirColetaTxT}>Solicitar Ponto</Text>
-              </HStack>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.title}>Bem vindo</Text>
-          <Text style={styles.description}>Encontre no mapa um ponto de coleta</Text>
-
-          <View style={styles.mapContainer}>
-
-            {initialPosition[0] !== 0 && (
-              <MapView
-                style={styles.map}
-                // loadingEnabled={initialPosition[0] === 0}
-                initialRegion={{
-                  latitude: initialPosition[0],
-                  longitude: initialPosition[1],
-                  longitudeDelta: 0.014,
-                  latitudeDelta: 0.014
-                }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
+          <View extend type style={styles.container}>
+            <View>
+              <TouchableOpacity
+                onPress={getData}
+                style={styles.sugerirColeta}
               >
-                {points.map(point => {
-                  return (< Marker
-                    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-                    key={String(point.id)}
-                    style={styles.mapMarker}
-                    onPress={() => handleNavigateToDetail(point.id)}
-                    coordinate={{
-                      latitude: parseFloat(point.latitude),
-                      longitude: parseFloat(point.longitude)
-                    }}
-                  >
-                    <View style={point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainer}>
-                      <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
-                      <Text style={styles.mapMarkerTitle}>
-                        {point.name}
-                      </Text>
-                    </View>
-                    <View style={point.status === 'Pendente' ? styles.trianglePendent : styles.triangle}></View>
-                  </Marker>
-                  )
-                })}
-              </MapView>
-            )}
-            {initialPosition[0] === 0 && (
-              <View>
-                <Text style={styles.title}>Carregando...</Text>
-              </View>
-            )}
+                <HStack>
+                  <Icon name="map-pin" size={20} color="#34cb79" />
+                  <Text style={styles.sugerirColetaTxT}>Solicitar Ponto</Text>
+                </HStack>
+              </TouchableOpacity>
+            </View>
 
-          </View>
-          <View style={styles.itemsContainer}>
-            <ScrollView horizontal={true}>
-              {items.map(item => (
-                <TouchableOpacity
-                  key={String(item.id)}
-                  style={[
-                    styles.item,
-                    selectedItems.includes(item.id) ? styles.selectedItem : {}
-                  ]}
-                  onPress={() => handleSelectItem(item.id)}
-                  activeOpacity={0.6}
+            <Text style={styles.title}>Bem vindo</Text>
+            <Text style={styles.description}>Encontre no mapa um ponto de coleta</Text>
+
+            <View style={styles.mapContainer}>
+
+              {initialPosition[0] !== 0 && (
+                <MapView
+                  style={styles.map}
+                  // loadingEnabled={initialPosition[0] === 0}
+                  initialRegion={{
+                    latitude: initialPosition[0],
+                    longitude: initialPosition[1],
+                    longitudeDelta: 0.014,
+                    latitudeDelta: 0.014
+                  }}
                 >
-                  <SvgUri
-                    uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                    // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
-                    height={30} width={30} />
-                  <Text style={styles.itemTitle}>{item.title}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+                  {points.map(point => {
+                    return (< Marker
+                      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                      key={String(point.id)}
+                      style={styles.mapMarker}
+                      onPress={() => handleNavigateToDetail(point.id)}
+                      coordinate={{
+                        latitude: parseFloat(point.latitude),
+                        longitude: parseFloat(point.longitude)
+                      }}
+                    >
+                      <View style={point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainer}>
+                        <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
+                        <Text style={styles.mapMarkerTitle}>
+                          {point.name}
+                        </Text>
+                      </View>
+                      <View style={point.status === 'Pendente' ? styles.trianglePendent : styles.triangle}></View>
+                    </Marker>
+                    )
+                  })}
+                </MapView>
+              )}
+              {initialPosition[0] === 0 && (
+                <View>
+                  <Text style={styles.title}>Carregando...</Text>
+                </View>
+              )}
+
+            </View>
+            <View style={styles.itemsContainer}>
+              <ScrollView horizontal={true}>
+                {items.map(item => (
+                  <TouchableOpacity
+                    key={String(item.id)}
+                    style={[
+                      styles.item,
+                      selectedItems.includes(item.id) ? styles.selectedItem : {}
+                    ]}
+                    onPress={() => handleSelectItem(item.id)}
+                    activeOpacity={0.6}
+                  >
+                    <SvgUri
+                      uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
+                      // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                      height={30} width={30} />
+                    <Text style={styles.itemTitle}>{item.title}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
           </View>
-        </View>
-</ScrollView>
+        </ScrollView>
       </SafeAreaView>
     </>
   )
