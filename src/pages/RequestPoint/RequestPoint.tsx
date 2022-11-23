@@ -149,22 +149,28 @@ const RequestPoint = () => {
   })
 
   async function handleRequest () {
-    const items = selectedItems.join(',')
-
-    const data = {
-      name,
-      image,
-      latitude: coordinate[0] ? coordinate[0] : initialPosition[0],
-      longitude: coordinate[1] ? coordinate[1] : initialPosition[1],
-      items,
-      status: 'Pendente',
-      uf: selectedUf,
-      city: selectedCity,
-      country: 'Brasil',
-      description,
-      street
-    }
     try {
+      const items = selectedItems.join(',')
+      const reader = new FileReader()
+      let baseUrl: any
+      reader.onload = async () => {
+        baseUrl = reader.result
+        setImage(baseUrl)
+        console.log(baseUrl)
+      }
+      const data = {
+        name,
+        image,
+        latitude: coordinate[0] ? coordinate[0] : initialPosition[0],
+        longitude: coordinate[1] ? coordinate[1] : initialPosition[1],
+        items,
+        status: 'Pendente',
+        uf: selectedUf,
+        city: selectedCity,
+        country: 'Brasil',
+        description,
+        street
+      }
       await api.post('pontocoleta', data)
       handleNavigateToPoints()
     } catch (err) {
@@ -202,7 +208,7 @@ const RequestPoint = () => {
           }
         </Button>
 
-        <Text style={styles.title} >Dados</Text>
+        <Text style={styles.title} >Endereço</Text>
         <View style={styles.containe}>
           {initialPosition[0] !== 0 && (
             <MapView
@@ -234,7 +240,7 @@ const RequestPoint = () => {
           )}
         </View>
 
-        <Text style={styles.title} >Daaados</Text>
+        <Text style={styles.title} >Dados</Text>
 
         <FormControl w="100%">
           <FormControl.Label >Seu nome</FormControl.Label>
@@ -309,8 +315,8 @@ const RequestPoint = () => {
                 activeOpacity={0.6}
               >
                 <SvgUri
-                  uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
-                  // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                  // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                  uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                   height={30} width={30} />
                 <Text style={styles.itemTitle}>{item.title}</Text>
               </TouchableOpacity>

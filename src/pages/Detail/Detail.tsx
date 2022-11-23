@@ -61,8 +61,8 @@ const Detail = () => {
         id_ponto: routeParams.point_id
       }
     }).then(response => {
-      setCategories(response.tb_ponto_categorias.id_category)
-      console.log(categories)
+      setCategories(response)
+      console.log(response.data)
     })
   }, [])
 
@@ -100,15 +100,24 @@ const Detail = () => {
         <Text style={styles.pointName}>{data.name}</Text>
         {(data.description !== '') ? <Text style={styles.addressContent}>{data.description} </Text> : null}
 
-        <Text style={styles.addressTitle}>Este  ponto recolhe:</Text>
-        <Text style={styles.addressContent}></Text>
+        <Text style={styles.addressTitle}>Este  ponto coleta:</Text>
+        {categories
+          ? Object.values(categories.data).map((category: any) => {
+            return (
+              <View key={categories.id}>
+                <Text style={styles.addressContent}>{category?.title},</Text>
+              </View>
+
+            )
+          })
+          : null}
 
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Endereço</Text>
           <Text style={styles.addressContent}>{data.city}, {data.uf} </Text>
         </View>
       </View>
-      {(data.cellphone !== '')
+      {(data.cellphone === '')
         ? <View style={styles.footer}>
         <RectButton style={styles.buttonZap}
           onPress={handleWhatsapp}

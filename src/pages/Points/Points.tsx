@@ -202,8 +202,8 @@ const Points = () => {
                   activeOpacity={0.6}
                 >
                   <SvgUri
-                    uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                    // uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
+                    // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                    uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                     height={30} width={30} />
                   <Text style={styles.itemTitle}>{item.title}</Text>
                 </TouchableOpacity>
