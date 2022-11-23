@@ -242,7 +242,7 @@ const RequestPoint = () => {
         <Text style={styles.title} >Dados</Text>
 
         <FormControl w="100%">
-          <FormControl.Label >Seu nome</FormControl.Label>
+          <FormControl.Label >Nome</FormControl.Label>
           <Input style={styles.input} onChangeText={setName} />
         </FormControl>
 
