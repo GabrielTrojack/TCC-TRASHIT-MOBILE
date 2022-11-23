@@ -69,8 +69,6 @@ export default StyleSheet.create({
     fontSize: 16
   },
   image: {
-    height: 210,
-    width: 150,
     marginLeft: 80
   },
   gotAcount: {

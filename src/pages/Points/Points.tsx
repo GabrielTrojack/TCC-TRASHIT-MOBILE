@@ -4,11 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { Feather as Icon } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, ScrollView, SafeAreaView, Alert, Image } from 'react-native'
+import { RefreshControl, View, Text, ScrollView, SafeAreaView, Alert, Image, refr } from 'react-native'
 import { HStack } from 'native-base'
 import MapView, { Marker } from 'react-native-maps'
 import { SvgUri } from 'react-native-svg'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import type { ScrollViewProps } from 'react-native'
 
 import * as Location from 'expo-location'
 import api from '../../services/api'
@@ -42,13 +43,17 @@ interface Point {
 //   city: string
 // }
 
+const wait = async (timeout) => {
+  return await new Promise(resolve => setTimeout(resolve, timeout))
+}
+
 const Points = () => {
   const [points, setPoints] = useState<Point[]>([])
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0])
   const [items, setItems] = useState<Item[]>([])
   const navigation = useNavigation<authScreenProp>()
   const [selectedItems, setSelectedItems] = useState<number[]>([])
-  // const route = useRoute()
+  const [refreshing, setRefreshing] = React.useState(false)
 
   useEffect(() => {
     api.get('/category').then(response => {
@@ -127,10 +132,22 @@ const Points = () => {
     }
   }
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
+
   return (
     <>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
+        <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
+        <View extend type style={styles.container}>
           <View>
             <TouchableOpacity
               onPress={getData}
@@ -202,8 +219,8 @@ const Points = () => {
                   activeOpacity={0.6}
                 >
                   <SvgUri
-                    // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                    uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                    uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                    // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                     height={30} width={30} />
                   <Text style={styles.itemTitle}>{item.title}</Text>
                 </TouchableOpacity>
@@ -211,7 +228,7 @@ const Points = () => {
             </ScrollView>
           </View>
         </View>
-
+</ScrollView>
       </SafeAreaView>
     </>
   )

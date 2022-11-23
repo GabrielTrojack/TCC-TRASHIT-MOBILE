@@ -183,7 +183,7 @@ const RequestPoint = () => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
-        showsVerticalScrollIndicator={true}>
+        showsVerticalScrollIndicator={false}>
         <HStack>
           <TouchableOpacity
             style={styles.backButton}
@@ -191,7 +191,7 @@ const RequestPoint = () => {
           >
             <Icon name="arrow-left" size={20} color="#34cb79" />
           </TouchableOpacity>
-          <Text style={styles.title} >Solicitar Ponto de coleta</Text>
+          <Text style={styles.title}>Solicitar Ponto de coleta</Text>
         </HStack>
 
         <Button style={!image ? styles.camBtn : styles.anxImg} onPress={async () => await pickImage()}>
@@ -315,8 +315,8 @@ const RequestPoint = () => {
                 activeOpacity={0.6}
               >
                 <SvgUri
-                  // uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
-                  uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
+                  uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                  // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                   height={30} width={30} />
                 <Text style={styles.itemTitle}>{item.title}</Text>
               </TouchableOpacity>

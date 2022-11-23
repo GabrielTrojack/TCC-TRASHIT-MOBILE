@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import Constants from 'expo-constants'
 
 export default StyleSheet.create({
@@ -33,8 +33,8 @@ export default StyleSheet.create({
   },
 
   map: {
-    width: '100%',
-    height: '100%'
+    width: 1000,
+    height: Dimensions.get('window').height / 1.56
   },
 
   mapMarker: {

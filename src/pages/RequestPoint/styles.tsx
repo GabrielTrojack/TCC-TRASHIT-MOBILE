@@ -11,7 +11,7 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: 24,
     marginHorizontal: '3%',
-    marginTop: '-2%'
+    marginTop: '1%'
   },
   input: {
     backgroundColor: '#fff'
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: '10%'
+    marginBottom: '20%'
   },
   buttonText: {
     flex: 1,
