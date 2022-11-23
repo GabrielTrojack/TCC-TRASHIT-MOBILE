@@ -64,7 +64,6 @@ const Detail = () => {
       }
     }).then(response => {
       setCategories(response)
-      console.log(response.data)
     })
   }, [])
 

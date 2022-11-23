@@ -157,13 +157,6 @@ const RequestPoint = () => {
   async function handleRequest() {
     try {
       const items = selectedItems.join(',')
-      // const reader = new FileReader()
-      // let baseUrl: any
-      // reader.onload = async () => {
-      //   baseUrl = reader.result
-      //   setImage(baseUrl)
-      //   console.log(baseUrl)
-      // }
       const data = {
         name,
         image: `data:image;base64,${imageBase64}`,
