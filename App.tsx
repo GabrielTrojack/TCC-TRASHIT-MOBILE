@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { NativeBaseProvider } from 'native-base'
 import React, {
-// useCallback,
-//  useEffect,
-//   useState
+  // useCallback,
+  //  useEffect,
+  //   useState
 } from 'react'
 // import * as SplashScreen from 'expo-splash-screen'
 import {
-  StatusBar
+  StatusBar,
+  LogBox
   // View
 } from 'react-native'
 // import { Ubuntu_700Bold, useFonts } from '@expo-google-fonts/ubuntu'
 
 import Routes from './src/Routes'
 
-export default function App () {
+export default function App() {
   // const [appIsReady, setAppIsReady] = useState(false)
 
   // useEffect(() => {
@@ -44,6 +45,10 @@ export default function App () {
   // if (!appIsReady) {
   //   return null
   // }
+
+  LogBox.ignoreLogs([
+    'Warning: Each child in a list should have a unique "key" prop.'
+  ])
 
   return (
     <NativeBaseProvider>
