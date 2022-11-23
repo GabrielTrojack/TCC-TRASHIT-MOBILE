@@ -61,7 +61,7 @@ const Points = () => {
     })
   }, [])
 
-  function handleSelectItem(id: number) {
+  function handleSelectItem (id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -99,7 +99,7 @@ const Points = () => {
   }, [selectedItems, refreshing])
 
   useEffect(() => {
-    async function loadPosition() {
+    async function loadPosition () {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -112,14 +112,14 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateToDetail(id: number) {
+  function handleNavigateToDetail (id: number) {
     navigation.navigate('Detail', { point_id: id })
   }
 
-  function handleNavigateToReqPoint() {
+  function handleNavigateToReqPoint () {
     navigation.navigate('RequestPoint')
   }
-  function handleNavigateToLogin() {
+  function handleNavigateToLogin () {
     navigation.navigate('Login')
   }
 
@@ -147,7 +147,7 @@ const Points = () => {
               onRefresh={onRefresh}
             />
           }>
-          <View extend type style={styles.container}>
+          <View style={styles.container}>
             <View>
               <TouchableOpacity
                 onPress={getData}
@@ -187,13 +187,20 @@ const Points = () => {
                         longitude: parseFloat(point.longitude)
                       }}
                     >
-                      <View style={point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainer}>
-                        <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
-                        <Text style={styles.mapMarkerTitle}>
-                          {point.name}
-                        </Text>
-                      </View>
-                      <View style={point.status === 'Pendente' ? styles.trianglePendent : styles.triangle}></View>
+                      <View style={
+                      point.status === null
+                        ? styles.mapMarkerContainer
+                        : point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainerAcepted}>
+                      <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
+                      <Text style={styles.mapMarkerTitle}>
+                        {point.name}
+                      </Text>
+                    </View>
+                    <View style={
+                        point.status === null
+                          ? styles.triangle
+                          : point.status === 'Pendente' ? styles.trianglePendent : styles.triangleAcepted}>
+                    </View>
                     </Marker>
                     )
                   })}

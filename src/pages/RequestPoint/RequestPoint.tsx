@@ -219,7 +219,6 @@ const RequestPoint = () => {
                   [event.nativeEvent.coordinate.latitude,
                     event.nativeEvent.coordinate.longitude
                   ])
-                console.log(event.nativeEvent.coordinate)
               }}
               initialRegion={{
                 latitude: initialPosition[0],

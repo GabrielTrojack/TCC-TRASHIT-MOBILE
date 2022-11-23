@@ -13,7 +13,7 @@ export default StyleSheet.create({
   title: {
     color: '#fff',
     fontSize: 20,
-    // fontFamily: 'Ubuntu_700Bold',
+    fontFamily: '',
     maxWidth: 300
   },
 
@@ -66,6 +66,16 @@ export default StyleSheet.create({
     width: 90,
     height: 70,
     backgroundColor: '#c59117',
+    flexDirection: 'column',
+    borderRadius: 8,
+    overflow: 'hidden',
+    alignItems: 'center'
+  },
+
+  mapMarkerContainerAcepted: {
+    width: 90,
+    height: 70,
+    backgroundColor: '#4376e3',
     flexDirection: 'column',
     borderRadius: 8,
     overflow: 'hidden',
@@ -167,6 +177,17 @@ export default StyleSheet.create({
     borderBottomWidth: 0,
     borderLeftWidth: 12,
     borderTopColor: '#c59117',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: 'transparent'
+  },
+  triangleAcepted: {
+    width: 1,
+    borderTopWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 0,
+    borderLeftWidth: 12,
+    borderTopColor: '#4376e3',
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: 'transparent'
