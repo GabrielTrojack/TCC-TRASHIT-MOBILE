@@ -66,11 +66,12 @@ const Register = () => {
       <ImageBackground
         source={require('../../assets/home-background.png')}
         style={styles.container}
-        imageStyle={{ width: 274, height: 368, opacity: 0.1 }}
+        imageStyle={{ width: 274, height: 368 }}
       >
         <View style={styles.main}>
 
-        <Trashbin style={styles.image}/>
+        {/* <Trashbin style={styles.image}/> */}
+        <Image style={styles.image} source={require('../../assets/recycle-bin-title.png')}/>
 
           <View>
             <Text style={styles.title}>

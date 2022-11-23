@@ -7,6 +7,13 @@ export default StyleSheet.create({
     backgroundColor: '#322153'
   },
 
+  title: {
+    color: '#fff',
+    fontSize: 20,
+    // fontFamily: 'Ubuntu_700Bold',
+    maxWidth: 300
+  },
+
   pointImage: {
     width: '100%',
     height: '30%',
