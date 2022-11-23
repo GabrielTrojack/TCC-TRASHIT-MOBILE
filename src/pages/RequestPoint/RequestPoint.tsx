@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/space-before-function-paren */
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -59,6 +62,7 @@ const RequestPoint = () => {
   const [items, setItems] = useState<Item[]>([])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const [image, setImage] = useState<string>('')
+  const [imageBase64, setImageBase64] = useState<any>('')
 
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0])
   const [coordinate, setCoordinate] = useState<[number, number]>([0, 0])
@@ -92,11 +96,11 @@ const RequestPoint = () => {
       })
   }, [selectedUf])
 
-  function handleSelectUf (uf: string) {
+  function handleSelectUf(uf: string) {
     setSelectedUf(uf)
   }
 
-  function handleSelectCity (city: string) {
+  function handleSelectCity(city: string) {
     setSelectedCity(city)
   }
 
@@ -106,7 +110,7 @@ const RequestPoint = () => {
     })
   }, [])
 
-  function handleSelectItem (id: number) {
+  function handleSelectItem(id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -118,13 +122,14 @@ const RequestPoint = () => {
     }
   }
 
-  function handleNavigateToPoints () {
+  function handleNavigateToPoints() {
     navigation.navigate('Points')
   }
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1
@@ -132,11 +137,12 @@ const RequestPoint = () => {
 
     if (!result.cancelled) {
       setImage(result.uri)
+      setImageBase64(result.base64)
     }
   }
 
   useEffect(() => {
-    async function loadPosition () {
+    async function loadPosition() {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -148,19 +154,19 @@ const RequestPoint = () => {
     loadPosition()
   })
 
-  async function handleRequest () {
+  async function handleRequest() {
     try {
       const items = selectedItems.join(',')
-      const reader = new FileReader()
-      let baseUrl: any
-      reader.onload = async () => {
-        baseUrl = reader.result
-        setImage(baseUrl)
-        console.log(baseUrl)
-      }
+      // const reader = new FileReader()
+      // let baseUrl: any
+      // reader.onload = async () => {
+      //   baseUrl = reader.result
+      //   setImage(baseUrl)
+      //   console.log(baseUrl)
+      // }
       const data = {
         name,
-        image,
+        image: `data:image;base64,${imageBase64}`,
         latitude: coordinate[0] ? coordinate[0] : initialPosition[0],
         longitude: coordinate[1] ? coordinate[1] : initialPosition[1],
         items,
@@ -175,6 +181,7 @@ const RequestPoint = () => {
       handleNavigateToPoints()
     } catch (err) {
       alert(JSON.stringify(err))
+      console.log(err)
     }
   }
 
@@ -217,7 +224,7 @@ const RequestPoint = () => {
               onPress={(event: any) => {
                 setCoordinate(
                   [event.nativeEvent.coordinate.latitude,
-                    event.nativeEvent.coordinate.longitude
+                  event.nativeEvent.coordinate.longitude
                   ])
               }}
               initialRegion={{
@@ -314,7 +321,7 @@ const RequestPoint = () => {
                 activeOpacity={0.6}
               >
                 <SvgUri
-                  uri={`http://192.168.30.158:3333/uploads/${item.imageData}`}
+                  uri={`http://192.168.12.176:3333/uploads/${item.imageData}`}
                   // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                   height={30} width={30} />
                 <Text style={styles.itemTitle}>{item.title}</Text>

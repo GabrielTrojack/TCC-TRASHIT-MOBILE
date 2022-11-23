@@ -61,7 +61,7 @@ const Points = () => {
     })
   }, [])
 
-  function handleSelectItem (id: number) {
+  function handleSelectItem(id: number) {
     const alredySelected = selectedItems.findIndex(item => item === id)
 
     if (alredySelected >= 0) {
@@ -99,7 +99,7 @@ const Points = () => {
   }, [selectedItems, refreshing])
 
   useEffect(() => {
-    async function loadPosition () {
+    async function loadPosition() {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert('Oops', 'Precisamos da sua permissão para obter a localização')
@@ -112,14 +112,14 @@ const Points = () => {
     loadPosition()
   })
 
-  function handleNavigateToDetail (id: number) {
+  function handleNavigateToDetail(id: number) {
     navigation.navigate('Detail', { point_id: id })
   }
 
-  function handleNavigateToReqPoint () {
+  function handleNavigateToReqPoint() {
     navigation.navigate('RequestPoint')
   }
-  function handleNavigateToLogin () {
+  function handleNavigateToLogin() {
     navigation.navigate('Login')
   }
 
@@ -188,19 +188,19 @@ const Points = () => {
                       }}
                     >
                       <View style={
-                      point.status === null
-                        ? styles.mapMarkerContainer
-                        : point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainerAcepted}>
-                      <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
-                      <Text style={styles.mapMarkerTitle}>
-                        {point.name}
-                      </Text>
-                    </View>
-                    <View style={
+                        point.status === null
+                          ? styles.mapMarkerContainer
+                          : point.status === 'Pendente' ? styles.mapMarkerContainerPendent : styles.mapMarkerContainerAcepted}>
+                        <Image style={styles.mapMarkerImage} source={{ uri: point.image }} />
+                        <Text style={styles.mapMarkerTitle}>
+                          {point.name}
+                        </Text>
+                      </View>
+                      <View style={
                         point.status === null
                           ? styles.triangle
                           : point.status === 'Pendente' ? styles.trianglePendent : styles.triangleAcepted}>
-                    </View>
+                      </View>
                     </Marker>
                     )
                   })}
@@ -226,7 +226,7 @@ const Points = () => {
                     activeOpacity={0.6}
                   >
                     <SvgUri
-                      uri={`http://192.168.1.105:3333/uploads/${item.imageData}`}
+                      uri={`http://192.168.12.176:3333/uploads/${item.imageData}`}
                       // uri={`http://192.168.12.196:3333/uploads/${item.imageData}`}
                       height={30} width={30} />
                     <Text style={styles.itemTitle}>{item.title}</Text>

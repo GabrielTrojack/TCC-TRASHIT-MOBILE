@@ -19,6 +19,7 @@
     "expo": "~46.0.9",
     "expo-app-loading": "~2.1.0",
     "expo-camera": "^12.3.0",
+    "expo-file-system": "~14.1.0",
     "expo-font": "~10.2.0",
     "expo-image-picker": "^13.3.1",
     "expo-location": "^14.3.0",
